@@ -1,5 +1,5 @@
 <template>
-  <v-list flat three-line shaped width="40%" style="margin-left: 25%;background-color: aliceblue">
+  <v-list flat three-line shaped width="64%" class="list">
     <v-list-item-group color="blue">
       <v-list-item to="/" style="margin-bottom: 3px;background-color: white;height: auto" v-for="(item, i) in items" :key="i">
         <BlogListItem :blog="item"></BlogListItem>
@@ -68,4 +68,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media screen and (max-width: 960px)  {
+  .list{
+    margin-left: 0;
+    background-color: aliceblue
+  }
+}
+@media screen and (min-width: 961px)  {
+  .list{
+    margin-left: 18%;
+    background-color: aliceblue
+  }
+}
+</style>
