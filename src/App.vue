@@ -16,7 +16,7 @@
       <v-spacer></v-spacer>
       <v-btn target="_self" text style="font-size: 22px" to="/">首页</v-btn>
       <v-btn target="_self" text style="font-size: 22px">写文章</v-btn>
-      <v-btn target="_self" text style="font-size: 22px">管理</v-btn>
+      <v-btn target="_self" text style="font-size: 22px" to="/manage">管理</v-btn>
       <v-spacer></v-spacer>
       <v-text-field solo flat light style="margin-top: auto"></v-text-field>
       <v-spacer></v-spacer>

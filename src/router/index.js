@@ -1,30 +1,29 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "@/components/Login";
-import UserHome from "@/components/UserHome";
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: UserHome
+    component: () => import("../components/UserHome")
   },
   {
     path: "/home",
     name: "Userhome",
-    component: UserHome
+    component: () => import("../components/UserHome")
   },
   {
     path: "/login",
     name: "Login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: Login
+    component: () => import("../components/Login")
+  },
+  {
+    path: "/manage",
+    name: "Manage",
+    component: () => import("../components/Manage")
   }
 ];
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
