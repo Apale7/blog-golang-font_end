@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     access_token: "",
     refresh_token: "",
-    logged: false
+    logged: true
   },
   mutations: {
     setAccessToken(state, token) {

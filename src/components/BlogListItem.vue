@@ -1,11 +1,12 @@
 <template>
-  <v-container>
+  <v-container style="margin: 0 0 0 0">
     <h2>{{ blog.title }}</h2>
-    <!--    <p v-html="blog.content.substring(0, 100)+'...'"></p>-->
-    <v-list-item-content style="color: darkgray" v-html="blog.content.substring(0, 100)+'...'"></v-list-item-content>
-    <v-row>
-      <v-col><small>{{ toTime(blog.created_at) }}</small></v-col>
-      <v-col cols="5"><small>阅读量: 100w</small></v-col>
+    <v-list-item-content style="color: darkgray"
+                         v-html="blog.content.substring(0, maxWidth > maxHeight ? 100 : 55)+'...'">
+    </v-list-item-content>
+    <v-row no-gutters>
+      <v-col cols="3"><small>{{ toTime(blog.created_at) }}</small></v-col>
+      <v-col cols="2"><small>阅读量: 100w</small></v-col>
     </v-row>
   </v-container>
 </template>
@@ -13,7 +14,7 @@
 <script>
 export default {
   name: "BlogListItem",
-  props: ['blog'],
+  props: ['blog', 'width', 'maxWidth', 'maxHeight'],
   data() {
     return {}
   },

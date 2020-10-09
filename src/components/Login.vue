@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn text v-if="!logged" dark v-bind="attrs" v-on="on">
+      <v-btn text v-if="!logged" v-bind="attrs" v-on="on">
         登 录
       </v-btn>
     </template>
