@@ -1,29 +1,33 @@
 <template>
-  <v-list style="margin: 0 auto" flat three-line :width="maxWidth > maxHeight ?
-      0.4*maxWidth +'px'
-       : 0.9*maxWidth  + 'px'">
-    <v-list-item-group color="blue">
-      <v-list-item to="/" v-for="(item, i) in items"
-                   :key="i"
-                   style="display: -webkit-box;-webkit-box-orient: vertical;">
-        <BlogListItem
-            :blog="item"
-            :width="width"
-            :maxWidth="maxWidth"
-            :maxHeight="maxHeight"
-        >
-        </BlogListItem>
-        <v-divider
-            class="mx-0"
-            v-if="i!==items.length-1"
-        ></v-divider>
-      </v-list-item>
-    </v-list-item-group>
-  </v-list>
+  <div style="margin: 0 auto;display: flex;flex-direction: row;justify-content: center">
+    <Aside :user-info="{name: 'Apale'}" v-if="width > 0.6 * maxWidth"></Aside>
+    <v-list flat three-line :style="{padding: '0 0 0 0', width: maxWidth > maxHeight ?
+      0.5*maxWidth +'px'
+       : 0.9*maxWidth  + 'px'}">
+      <v-list-item-group color="blue">
+        <v-list-item to="/" v-for="(item, i) in items"
+                     :key="i"
+                     style="display: -webkit-box;-webkit-box-orient: vertical;">
+          <BlogListItem
+              :blog="item"
+              :width="width"
+              :maxWidth="maxWidth"
+              :maxHeight="maxHeight"
+          >
+          </BlogListItem>
+          <v-divider
+              class="mx-0"
+              v-if="i!==items.length-1"
+          ></v-divider>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </div>
 </template>
 
 <script>
 import BlogListItem from "@/components/BlogListItem";
+import Aside from "@/components/Aside";
 
 export default {
   name: "UserHome",
@@ -77,6 +81,7 @@ export default {
   },
   props: ['width', 'maxWidth', 'maxHeight'],
   components: {
+    Aside,
     BlogListItem
   }
 };

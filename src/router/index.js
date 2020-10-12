@@ -6,22 +6,27 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("../components/UserHome")
+    component: () => import("../views/UserHome")
   },
   {
     path: "/home",
     name: "Userhome",
-    component: () => import("../components/UserHome")
+    component: () => import("../views/UserHome")
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../components/Login")
+    component: () => import("../components/LoginButton")
   },
   {
     path: "/manage",
     name: "Manage",
-    component: () => import("../components/Manage")
+    component: () => import("../views/Manage")
+  },
+  {
+    path: "/create",
+    name: "Create",
+    component: () => import("../views/Create")
   }
 ];
 const router = new VueRouter({

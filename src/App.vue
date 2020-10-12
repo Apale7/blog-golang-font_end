@@ -16,7 +16,7 @@
       <v-spacer></v-spacer>
       <v-btn target="_self" text style="font-size: 22px" to="/">首页</v-btn>
 
-      <v-btn target="_self" text style="font-size: 22px">写文章</v-btn>
+      <v-btn target="_self" text style="font-size: 22px" to="/create">写文章</v-btn>
 
       <v-btn target="_self" text style="font-size: 22px" to="/manage">管理</v-btn>
       <v-spacer></v-spacer>
@@ -57,7 +57,7 @@
 // import HelloWorld from "./components/HelloWorld";
 
 // import router from "@/router";
-import Login from "@/components/Login";
+import Login from "@/components/LoginButton";
 import Mine from "@/components/Mine";
 
 export default {

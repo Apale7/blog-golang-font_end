@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Register from "@/components/Register";
+import Register from "@/components/RegisterButton";
 import store from "../store";
 export default {
   name: "Login",
