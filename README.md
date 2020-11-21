@@ -1,5 +1,7 @@
 # blog-go-font_end
-
++ 请求都还没写
++ 支持markdown + katex数学公式
++ 暂时不支持图片
 ## Project setup
 ```
 npm install
