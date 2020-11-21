@@ -13,12 +13,13 @@
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="用户名" required></v-text-field>
+              <v-text-field label="用户名" required v-model="username"></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 label="密码"
                 type="password"
+                v-model="password"
                 required
               ></v-text-field>
             </v-col>
@@ -38,15 +39,25 @@
 <script>
 import Register from "@/components/RegisterButton";
 import store from "../store";
+import axios from 'axios'
 export default {
   name: "Login",
   data: () => ({
     dialog: false,
-    logged: store.state.logged
+    logged: store.state.logged,
+    username: '',
+    password: ''
   }),
   methods: {
     login() {
-      this.dialog = false;
+      let data = {username: this.username, password: this.password}
+      axios.post(`/api/user/login`, data).then(res=>{
+        if (res.data.code === 200) {
+          this.dialog = false;
+          this.$store.state.logged = true
+        }
+      })
+      // this.dialog = false;
     }
   },
   components: {

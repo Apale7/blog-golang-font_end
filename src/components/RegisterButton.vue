@@ -14,31 +14,37 @@
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="用户名*" required></v-text-field>
-            </v-col>
-            <v-col cols="12">
               <v-text-field
-                label="昵称(默认与用户名相同)"
-                required
+                  label="用户名*"
+                  required
+                  v-model="username"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                label="密码*"
-                type="password"
-                required
+                  label="昵称(默认与用户名相同)"
+                  required
+                  v-model="nickname"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                  label="密码*"
+                  type="password"
+                  required
+                  v-model="password"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
               <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
-                label="Age"
-                required
+                  :items="['0-17', '18-29', '30-54', '54+']"
+                  label="Age"
+                  required
               ></v-select>
             </v-col>
             <v-col cols="12" sm="6">
               <v-autocomplete
-                :items="[
+                  :items="[
                   'Skiing',
                   'Ice hockey',
                   'Soccer',
@@ -49,8 +55,8 @@
                   'Coding',
                   'Basejump'
                 ]"
-                label="Interests"
-                multiple
+                  label="Interests"
+                  multiple
               ></v-autocomplete>
             </v-col>
           </v-row>
@@ -60,7 +66,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="dialog = false">关闭</v-btn>
-        <v-btn color="blue darken-1" text @click="dialog = false">提交</v-btn>
+        <v-btn color="blue darken-1" text @click="commit">提交</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -68,11 +74,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "Register",
-  data: () => ({
-    dialog: false
-  })
+  data(){
+    return {
+      dialog: false,
+      username: '',
+      password: '',
+      nickname: ''
+    }
+  },
+  methods: {
+    commit(){
+      // console.log(this.username)
+      let data = {
+        username: this.username,
+        password: this.password,
+        nickname: this.nickname
+      }
+      // console.log(data)
+      console.log(this.username)
+      axios.post('/api/user/register', data).then(res => {
+        console.log(res.data)
+      })
+      this.dialog = false
+    }
+  }
 };
 </script>
 

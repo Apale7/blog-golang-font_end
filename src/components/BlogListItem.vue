@@ -1,8 +1,14 @@
 <template>
   <v-container style="margin: 0 0 0 0">
     <h2>{{ blog.title }}</h2>
-    <v-list-item-content style="color: darkgray"
-                         v-html="blog.content.substring(0, maxWidth > maxHeight ? 100 : 55)+'...'">
+    <v-list-item-content style="color: darkgray;"
+    >
+      <p style="display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+                margin: 0 0 0 0">
+        {{ blog.content }}</p>
     </v-list-item-content>
     <v-row no-gutters>
       <v-col cols="3"><small>{{ toTime(blog.created_at) }}</small></v-col>

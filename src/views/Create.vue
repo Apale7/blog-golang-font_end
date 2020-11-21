@@ -4,13 +4,13 @@
         class="edit"
         v-model="value"
         fontSize="16px"
+        @change="change"
     />
   </v-container>
 </template>
 
 <script>
 import { mavonEditor } from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
 import 'mavon-editor/dist/css/index.css'
 
 export default {
@@ -24,9 +24,7 @@ export default {
     mavonEditor,
   },
   methods: {
-
     change(value, render){
-      // render 为 markdown 解析后的结果[html]
       this.html = render;
     },
   },
@@ -48,16 +46,16 @@ export default {
 
 .edit {
   width: 100%;
-  height: 900px;
+  /*height: 900px;*/
   padding: 5px 5px 5px 5px;
   margin: 0 5px 0 0;
   background-color: white;
+  z-index: 0;
 }
 
 #container {
   height: 700px;
   display: flex;
   flex-direction: row;
-
 }
 </style>

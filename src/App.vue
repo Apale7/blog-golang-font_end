@@ -50,6 +50,7 @@
                    :maxWidth="maxWidth"
                    :maxHeight="maxHeight"/>
     </v-main>
+    <v-footer class="footer">广告位</v-footer>
   </v-app>
 </template>
 
@@ -105,5 +106,13 @@ export default {
   margin-left: 40px;
   margin-right: 40px;
   margin-top: 60px;
+  /*min-width: 600px;*/
+}
+.footer {
+  height: 150px;
+  text-align: center;
+}
+a {
+  text-decoration: none;
 }
 </style>
