@@ -1,7 +1,9 @@
 <template>
-  <v-app :style="{backgroundColor: this.$vuetify.theme.dark?'':'aliceblue'}">
+  <v-app
+      :style="{ backgroundColor: this.$vuetify.theme.dark ? '' : 'aliceblue' }"
+  >
     <header></header>
-    <v-app-bar app :color="this.$vuetify.theme.dark?'': 'white'">
+    <v-app-bar app :color="this.$vuetify.theme.dark ? '' : 'white'">
       <div class="d-flex align-center justify-center">
         <!--        <v-img-->
         <!--          alt="Vuetify Logo"-->
@@ -14,30 +16,35 @@
       </div>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-btn target="_self" text style="font-size: 22px" to="/">首页</v-btn>
+      <v-btn target="_self" text style="font-size: 20px" to="/">首页</v-btn>
 
-      <v-btn target="_self" text style="font-size: 22px" to="/create">写文章</v-btn>
+      <v-btn target="_self" text style="font-size: 20px" to="/create"
+      >写文章
+      </v-btn
+      >
 
-      <v-btn target="_self" text style="font-size: 22px" to="/manage">管理</v-btn>
+      <v-btn target="_self" text style="font-size: 20px" to="/manage"
+      >管理
+      </v-btn
+      >
       <v-spacer></v-spacer>
       <v-text-field
           label="Search"
           placeholder="输入标题或作者"
           outlined
           height="50px"
-          dense
+          denseF
           style="margin-top: 30px"
       ></v-text-field>
-      <v-btn
-          text
-          height="52px"
-          style="margin-top: 2px"
-      >
+      <v-btn text height="52px" style="margin-top: 2px">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn text fab small @click="themeHandler">
-        <v-icon>{{this.$vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'}}</v-icon>
+        <v-icon>{{
+            this.$vuetify.theme.dark ? "mdi-weather-night" : "mdi-weather-sunny"
+          }}
+        </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
       <Login v-if="!this.$store.state.logged"></Login>
@@ -46,9 +53,7 @@
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-main class="main">
-      <router-view :width="width"
-                   :maxWidth="maxWidth"
-                   :maxHeight="maxHeight"/>
+      <router-view :width="width" :maxWidth="maxWidth" :maxHeight="maxHeight"/>
     </v-main>
     <v-footer class="footer">广告位</v-footer>
   </v-app>
@@ -73,7 +78,7 @@ export default {
   data: () => ({
     maxWidth: window.screen.width,
     maxHeight: window.screen.height,
-    width: document.body.clientWidth * 1920 / window.screen.width,
+    width: (document.body.clientWidth * 1920) / window.screen.width
     // logged: false,
     // show: false
   }),
@@ -85,19 +90,19 @@ export default {
       this.$vuetify.theme.dark ^= 1;
     }
   },
-  computed: {
-  },
+  computed: {},
   mounted() {
     const that = this;
-    window.onresize = () => (() => {
-      window.clientWidth = document.body.clientWidth;
-      that.width = window.clientWidth * 1920 / this.maxWidth;
-    })();
+    window.onresize = () =>
+        (() => {
+          window.clientWidth = document.body.clientWidth;
+          that.width = (window.clientWidth * 1920) / this.maxWidth;
+        })();
   },
   watch: {
     width() {
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -108,10 +113,12 @@ export default {
   margin-top: 60px;
   /*min-width: 600px;*/
 }
+
 .footer {
   height: 150px;
   text-align: center;
 }
+
 a {
   text-decoration: none;
 }

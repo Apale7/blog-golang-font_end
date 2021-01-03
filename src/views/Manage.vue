@@ -5,6 +5,7 @@
       :sort-by="['created_at']"
       :sort-desc="[true]"
       class="elevation-1"
+      style="max-width: 1200px; margin: 0 auto"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -32,18 +33,15 @@
           <v-card>
             <v-card-title class="headline"
             >Are you sure you want to delete this item?
-            </v-card-title
-            >
+            </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete"
               >Cancel
-              </v-btn
-              >
+              </v-btn>
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
               >OK
-              </v-btn
-              >
+              </v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -67,6 +65,8 @@
 </template>
 
 <script>
+import Axios from "axios";
+
 export default {
   name: "Manage",
   data: () => ({
@@ -79,7 +79,7 @@ export default {
         sortable: false,
         value: "title"
       },
-      {text: "Created at", value: "date"},
+      {text: "Created at", value: "created_at", sortable: false},
       {text: "Actions", value: "actions", sortable: false}
     ],
     blogs: [],
@@ -108,7 +108,23 @@ export default {
   created() {
     this.initialize();
   },
+  mounted() {
+    let user = JSON.parse(sessionStorage.getItem("user"));
 
+    console.log(user);
+    Axios.get("/api/blog/list", {
+      params: {
+        userid: user.id
+      }
+    }).then(res => {
+      this.blogs = res.data.data.blogs;
+      for (let i = 0; i < this.blogs.length; ++i) {
+        this.blogs[i].created_at = new Date(
+            this.blogs[i].created_at * 1000
+        ).toLocaleString();
+      }
+    });
+  },
   methods: {
     toTime(n) {
       var offset_GMT = new Date().getTimezoneOffset();
@@ -118,50 +134,9 @@ export default {
       return t.toLocaleString();
     },
     initialize() {
-      this.blogs = [
-        {
-          title: "Frozen Yogurt",
-          created_at: 1601569000
-        },
-        {
-          title: "Ice cream sandwich",
-          created_at: 1600000084
-        },
-        {
-          title: "Eclair",
-          created_at: 1601560004
-        },
-        {
-          title: "Cupcake",
-          created_at: 1600069284
-        },
-        {
-          title: "Gingerbread",
-          created_at: 1601500284
-        },
-        {
-          title: "Jelly bean",
-          created_at: 1500569284
-        },
-        {
-          title: "Lollipop",
-          created_at: 1601569284
-        },
-        {
-          title: "Honeycomb",
-          created_at: 1601569285
-        },
-        {
-          title: "Donut",
-          created_at: 1601558684
-        },
-        {
-          title: "KitKat",
-          created_at: 1601569284
-        }
-      ];
+      this.blogs = [];
       for (let blog of this.blogs) {
-        blog['date'] = this.toTime(blog['created_at'])
+        blog["date"] = this.toTime(blog["created_at"]);
       }
     },
 
@@ -176,6 +151,10 @@ export default {
     },
 
     deleteItemConfirm() {
+      console.log(this.editedItem);
+      Axios.post("/api/blog/delete", this.editedItem).then(res => {
+        console.log(res)
+      })
       this.blogs.splice(this.editedIndex, 1);
       this.closeDelete();
     },

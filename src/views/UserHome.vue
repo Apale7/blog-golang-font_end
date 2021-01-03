@@ -1,14 +1,30 @@
 <template>
-  <div style="margin: 0 auto;display: flex;flex-direction: row;justify-content: center">
-    <Aside :user-info="{name: 'Apale'}" v-if="width > 0.7 * maxWidth"></Aside>
-    <v-list flat three-line :style="{padding: '0 0 0 0', width: maxWidth > maxHeight ?
-      0.5*maxWidth +'px'
-       : 0.9*maxWidth  + 'px'}">
+  <div
+      style="
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    "
+  >
+    <Aside :user-info="{ name: '' }" v-if="width > 0.7 * maxWidth"></Aside>
+    <v-list
+        flat
+        three-line
+        :style="{
+        padding: '0 0 0 0',
+        width:
+          maxWidth > maxHeight ? 0.5 * maxWidth + 'px' : 0.9 * maxWidth + 'px',
+      }"
+    >
       <v-list-item-group color="blue">
-        <v-list-item to="/" v-for="(item, i) in items"
-                     :key="i"
-                     style="display: -webkit-box;-webkit-box-orient: vertical;"
-                     @click="clickHandler(item)">
+        <v-list-item
+            to="/"
+            v-for="(item, i) in items"
+            :key="i"
+            style="display: -webkit-box; -webkit-box-orient: vertical"
+            @click="clickHandler(item)"
+        >
           <BlogListItem
               :blog="item"
               :width="width"
@@ -16,10 +32,7 @@
               :maxHeight="maxHeight"
           >
           </BlogListItem>
-          <v-divider
-              class="mx-0"
-              v-if="i!==items.length-1"
-          ></v-divider>
+          <v-divider class="mx-0" v-if="i !== items.length - 1"></v-divider>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -29,93 +42,17 @@
 <script>
 import BlogListItem from "@/components/BlogListItem";
 import Aside from "@/components/Aside";
+import Axios from "axios";
 
 export default {
   name: "UserHome",
   data: function () {
     return {
       items: [
-        {
-          id: 3,
-          title: "Qt5 QImage像素操作",
-          content: "这学期学数图，作业需要做界面，于是开始学习Qt。\n" +
-              "# QRgb\n" +
-              "Qt中，QRgb是unsigned int的别名\n" +
-              "Qt中用一个unsigned int存储像素值，格式为0xFFRRGGBB\n" +
-              "可以使用$qRgb(int r, int g, int b)$函数来方便地构造像素值\n" +
-              "\n" +
-              "```c\n" +
-              "\tqDebug() << hex <<qRgb(0, 0, 0) << '\\n';\n" +
-              "```\n" +
-              "输出为0xff000000\n" +
-              "# QImage\n" +
-              "QImage类有三种修改像素值的方法\n" +
-              "## 0、setPixel()\n" +
-              "函数声明：void setPixel(int i, int j, qRgb rgb)\n" +
-              "直接填入行列像素值即可\n" +
-              "但用此函数修改大量像素值的效率必然是极低的\n" +
-              "## 1、scanLine()\n" +
-              "函数声明： unsigned char *scanLine(int i)\n" +
-              "i为行号，从0开始\n" +
-              "返回值为第i行第一个字节的地址\n" +
-              "实际使用时可以把返回值强制类型转换为$qRgb*$，通过qRgb函数进行赋值\n" +
-              "## 2、bits()\n" +
-              "直接返回图像第一个字节的地址\n" +
-              "用法与scanLine类似\n" +
-              "一开始考虑到字节对齐，我是这样写的\n" +
-              "\n" +
-              "```c\n" +
-              "\tQImage img(fileName);\n" +
-              "\tint r = 30, ox = 50, oy = 50;\n" +
-              "\tQRgb *pixs = (QRgb*)img.bits();\n" +
-              "\tint W = (img.width() + 3) / 4 * 4;\n" +
-              "\tpixs[i * W + j] = qRgb(0, 0, 0);\n" +
-              "```\n" +
-              "但输出的图像上的像素位置不对，把W改为img.width()后位置正确\n" +
-              "我的猜测:QImage中的像素是按行存储的，并没有存储字节对齐的部分。",
-          created_at: "1601013349",
-          user_id: 0,
-          read_cnt: 1000000
-        },
-        {
-          id: 4,
-          title: "稀烂的文章",
-          content: "就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？",
-          created_at: "1601025016",
-          user_id: 0
-        },
-        {
-          id: 4,
-          title: "稀烂的文章",
-          content: "就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？",
-          created_at: "1601025016",
-          user_id: 0
-        },
-        {
-          id: 4,
-          title: "稀烂的文章",
-          content: "就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？",
-          created_at: "1601025016",
-          user_id: 0
-        },
-        {
-          id: 4,
-          title: "稀烂的文章",
-          content: "就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？",
-          created_at: "1601025016",
-          user_id: 0
-        },
-        {
-          id: 4,
-          title: "稀烂的文章",
-          content: "就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？就这？鸡又这？",
-          created_at: "1601025016",
-          user_id: 0
-        }
       ]
     };
   },
-  props: ['width', 'maxWidth', 'maxHeight'],
+  props: ["width", "maxWidth", "maxHeight"],
   components: {
     Aside,
     BlogListItem
@@ -123,14 +60,24 @@ export default {
   methods: {
     clickHandler(blog) {
       this.$router.push({
-        name: 'Content',
-        params: blog,
-      })
+        name: "Content",
+        params: blog
+      });
     }
+  },
+  mounted() {
+    Axios.get("/api/blog/list", {
+          params: {
+            // userid: JSON.parse(sessionStorage.getItem("user"))["id"]
+          }
+        }
+    ).then(res => {
+      this.items = res.data.data.blogs;
+      console.log(res.data.data)
+    });
   }
 };
 </script>
 
 <style scoped>
-
 </style>

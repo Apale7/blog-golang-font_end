@@ -45,16 +45,30 @@ export default {
   data: () => ({
     dialog: false,
     logged: store.state.logged,
-    username: '',
-    password: ''
+    username: "",
+    password: ""
   }),
+  mounted() {
+    if (!this.$store.state.logged) {
+      axios.get("/api/user/whoami").then(res => {
+        if (res.data.code === 200) {
+          this.dialog = false;
+          this.$store.state.logged = true;
+          sessionStorage.setItem("user", JSON.stringify(res.data.data));
+          console.log(JSON.stringify(res.data.data));
+        }
+      });
+    }
+  },
   methods: {
     login() {
-      let data = {username: this.username, password: this.password}
+      let data = { username: this.username, password: this.password };
       axios.post(`/api/user/login`, data).then(res=>{
         if (res.data.code === 200) {
           this.dialog = false;
-          this.$store.state.logged = true
+          this.$store.state.logged = true;
+          sessionStorage.setItem("user", JSON.stringify(res.data.data));
+          console.log(JSON.stringify(res.data.data));
         }
       })
       // this.dialog = false;

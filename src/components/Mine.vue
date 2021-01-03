@@ -7,7 +7,7 @@
             v-on="on"
             text
         >
-        apale
+        {{user.username}}
           <v-icon>mdi-chevron-down</v-icon>
         </v-btn>
       </template>
@@ -16,7 +16,7 @@
             v-for="(item, index) in items"
             :key="index"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title><v-btn @click="click(item)">{{ item.title }}</v-btn></v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -24,16 +24,34 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   name: "Mine",
   data: () => ({
+    user: {},
     items: [
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' },
-    ],
+      { title: "Logout" }
+      // { title: 'Click Me' },
+      // { title: 'Click Me' },
+      // { title: 'Click Me 2' },
+    ]
   }),
+  mounted() {
+    this.user = JSON.parse(sessionStorage.getItem("user"));
+  },
+  methods: {
+    click(item) {
+      if (item.title === 'Logout') {
+        Axios.post('/api/user/logout').then(res=>{
+          if (res.code===200) {
+            this.dialog = true;
+            this.$store.state.logged = false;
+            sessionStorage.clear();
+          }
+        })
+      }
+    }
+  }
 }
 </script>
 
